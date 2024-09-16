@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link data-n-head="ssr" rel="preload" type="image/x-icon" href="favicon.ico" as="icon">
+    <title>抖音神秘人照妖镜</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        #data-container {
+            margin: 0 auto;
+            margin-top: 5px;
+            padding: 5px 0;
+            width: 500px;
+            height: 100%;
+            border-radius: 5px;
+            background-color: rgba(51, 52, 63, 1);
+        }
+
+        .user-info {
+            margin-bottom: 5px;
+        }
+
+        .user-info:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .secUid {
+            width: 100%;
+            color: white;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .userList {
+            margin-left: 30px;
+            align-items: center;
+            display: flex;
+        }
+
+        .avatarUrl {
+            flex-shrink: 0;
+            margin-left: 8px;
+            margin-right: 8px;
+            position: relative;
+        }
+
+        .avatarUrl img {
+            border-radius: 50%;
+        }
+
+        .badgeImageListV2FirstUrl {
+            margin-right: 5px;
+            display: flex;
+        }
+
+        .newImIconUrl {
+            flex-shrink: 0;
+            align-items: center;
+            margin-right: 5px;
+            display: flex;
+        }
+
+        .badgeImageListV2ThirdUrl {
+            margin-right: 5px;
+            display: flex;
+        }
+
+        .club {
+            flex-shrink: 0;
+            align-items: center;
+            margin-right: 5px;
+            display: flex;
+            position: relative;
+        }
+
+        .clubImg {
+            border-style: none;
+        }
+
+        .clubName {
+            width: 100%;
+            color: #fff;
+            text-shadow: 0 1px 1px #ffa000;
+            text-align: center;
+            white-space: nowrap;
+            padding-left: 11px;
+            font-size: 16px;
+            font-weight: 600;
+            position: absolute;
+        }
+
+        .clubName span {
+            /*display: block;*/
+            color: #fff;
+            text-align: center;
+            text-overflow: ellipsis;
+            flex-shrink: 0;
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 16px;
+            display: inline-block;
+            transform: scale(.5);
+        }
+
+        .nickname {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            font-size: 14px;
+            flex-shrink: 0;
+            align-items: center;
+            /*margin-left: 4px;*/
+            display: flex;
+            position: relative;
+        }
+    </style>
+</head>
+
+<body>
+<div id="data-container"></div>
+
+<script>
+    // 立即获取数据并更新页面的函数
+    const fetchDataAndUpdatePage = () => {
+        fetchData('/data')
+            .then(response => response.json())
+            .then(data => {
+                updateDataContainer(data);
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    };
+
+    // 无感刷新函数
+    let refreshInterval;
+    const startRefresh = () => {
+        refreshInterval = setInterval(() => {
+            fetchData('/data')
+                .then(response => response.json())
+                .then(data => {
+                    updateDataContainer(data);
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        }, 5000);
+    };
+
+    // 更新数据容器的函数
+    const updateDataContainer = (data) => {
+        const dataContainer = document.getElementById('data-container');
+        dataContainer.innerHTML = '';
+        data.forEach(item => {
+            const userInfoDiv = document.createElement('div');
+            userInfoDiv.classList.add('user-info');
+
+            // 判断 badgeImageListV2FirstUrl 是否为 null
+            const badgeImageListV2FirstUrlDiv = document.createElement('div');
+            badgeImageListV2FirstUrlDiv.classList.add('badgeImageListV2FirstUrl');
+            if (item.badgeImageListV2FirstUrl!== null) {
+                badgeImageListV2FirstUrlDiv.innerHTML = `<img height="18" src="${item.badgeImageListV2FirstUrl}" alt="">`;
+            } else {
+                badgeImageListV2FirstUrlDiv.style.display = 'none';
+            }
+
+            // 判断 newImIconUrl 是否为 null
+            const newImIconUrlDiv = document.createElement('div');
+            newImIconUrlDiv.classList.add('newImIconUrl');
+            if (item.newImIconUrl!== null) {
+                newImIconUrlDiv.innerHTML = `<img height="18" src="${item.newImIconUrl}" alt="">`;
+            } else {
+                newImIconUrlDiv.style.display = 'none';
+            }
+
+            // 判断 badgeImageListV2ThirdUrl 是否为 null
+            const badgeImageListV2ThirdUrlDiv = document.createElement('div');
+            badgeImageListV2ThirdUrlDiv.classList.add('badgeImageListV2ThirdUrl');
+            if (item.badgeImageListV2ThirdUrl!== null) {
+                badgeImageListV2ThirdUrlDiv.innerHTML = `<img height="18" src="${item.badgeImageListV2ThirdUrl}" alt="">`;
+            } else {
+                badgeImageListV2ThirdUrlDiv.style.display = 'none';
+            }
+
+            // 判断 badgeUrl 是否为 null
+            const clubDiv = document.createElement('div');
+            clubDiv.classList.add('club');
+            if (item.badgeUrl!== null) {
+                clubDiv.innerHTML = `<img class="clubImg" height="18" src="${item.badgeUrl}" alt="">
+                                    <div class="clubName">
+                                        <span>${item.clubName}</span>
+                                    </div>`;
+            } else {
+                clubDiv.style.display = 'none';
+            }
+
+            userInfoDiv.innerHTML = `<a class="secUid" title="点击查看主页信息" href="https://www.douyin.com/user/${item.secUid}" target="_blank" >
+                                        <div class="userList">
+                                            <div class="avatarUrl">
+                                                <img height="32" src="${item.avatarUrl}" alt="">
+                                            </div>
+                                            ${badgeImageListV2FirstUrlDiv.outerHTML}
+                                            ${newImIconUrlDiv.outerHTML}
+                                            ${badgeImageListV2ThirdUrlDiv.outerHTML}
+                                            ${clubDiv.outerHTML}
+                                            <div class="nickname">${item.nickname}</div>
+                                        </div>
+                                     </a>
+
+`;
+            dataContainer.appendChild(userInfoDiv);
+        });
+    };
+
+    // 封装 fetch 请求的函数
+    const fetchData = async (url) => {
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response;
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            throw error;
+        }
+    };
+
+    // 页面加载时调用立即获取数据并更新页面函数，然后启动无感刷新
+    window.onload = () => {
+        fetchDataAndUpdatePage();
+        startRefresh();
+    };
+</script>
+</body>
+
+</html>
