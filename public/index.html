@@ -13,6 +13,10 @@
             padding: 0;
         }
 
+        body {
+            background-color: rgba(51, 52, 63, 1);
+        }
+
         #data-container {
             margin: 0 auto;
             margin-top: 5px;
@@ -21,6 +25,7 @@
             height: 100%;
             border-radius: 5px;
             background-color: rgba(51, 52, 63, 1);
+            box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
         }
 
         .user-info {
@@ -97,7 +102,6 @@
         }
 
         .clubName span {
-            /*display: block;*/
             color: #fff;
             text-align: center;
             text-overflow: ellipsis;
@@ -116,7 +120,6 @@
             font-size: 14px;
             flex-shrink: 0;
             align-items: center;
-            /*margin-left: 4px;*/
             display: flex;
             position: relative;
         }
@@ -161,7 +164,7 @@
             // 判断 badgeImageListV2FirstUrl 是否为 null
             const badgeImageListV2FirstUrlDiv = document.createElement('div');
             badgeImageListV2FirstUrlDiv.classList.add('badgeImageListV2FirstUrl');
-            if (item.badgeImageListV2FirstUrl!== null) {
+            if (item.badgeImageListV2FirstUrl !== null) {
                 badgeImageListV2FirstUrlDiv.innerHTML = `<img height="18" src="${item.badgeImageListV2FirstUrl}" alt="">`;
             } else {
                 badgeImageListV2FirstUrlDiv.style.display = 'none';
@@ -170,7 +173,7 @@
             // 判断 newImIconUrl 是否为 null
             const newImIconUrlDiv = document.createElement('div');
             newImIconUrlDiv.classList.add('newImIconUrl');
-            if (item.newImIconUrl!== null) {
+            if (item.newImIconUrl !== null) {
                 newImIconUrlDiv.innerHTML = `<img height="18" src="${item.newImIconUrl}" alt="">`;
             } else {
                 newImIconUrlDiv.style.display = 'none';
@@ -179,7 +182,7 @@
             // 判断 badgeImageListV2ThirdUrl 是否为 null
             const badgeImageListV2ThirdUrlDiv = document.createElement('div');
             badgeImageListV2ThirdUrlDiv.classList.add('badgeImageListV2ThirdUrl');
-            if (item.badgeImageListV2ThirdUrl!== null) {
+            if (item.badgeImageListV2ThirdUrl !== null) {
                 badgeImageListV2ThirdUrlDiv.innerHTML = `<img height="18" src="${item.badgeImageListV2ThirdUrl}" alt="">`;
             } else {
                 badgeImageListV2ThirdUrlDiv.style.display = 'none';
@@ -188,7 +191,7 @@
             // 判断 badgeUrl 是否为 null
             const clubDiv = document.createElement('div');
             clubDiv.classList.add('club');
-            if (item.badgeUrl!== null) {
+            if (item.badgeUrl !== null) {
                 clubDiv.innerHTML = `<img class="clubImg" height="18" src="${item.badgeUrl}" alt="">
                                     <div class="clubName">
                                         <span>${item.clubName}</span>
@@ -234,6 +237,29 @@
         fetchDataAndUpdatePage();
         startRefresh();
     };
+
+</script>
+<script src="js/index.iife.min.js">
+</script>
+<script>
+    const watermark = new WatermarkPlus.Watermark({
+        contentType: 'multi-line-text',
+        content: '本程序由清韵开发，仅服务于小温绾🔅治愈电台直播间',
+        fontSize: '16px',
+        width: 200,
+        height: 200,
+        rotate: 22,
+        advancedStyle: {
+            type: 'linear',
+            colorStops: [
+                {
+                    offset: 0,
+                    color: 'rgba(184, 184, 184, 0.1)'
+                }
+            ]
+        },
+    })
+    watermark.create();
 </script>
 </body>
 
