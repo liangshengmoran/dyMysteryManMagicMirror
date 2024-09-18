@@ -21,7 +21,7 @@
         #data-container {
             margin: 0 auto;
             padding-bottom: 10px;
-            width: 500px;
+            width: 700px;
             height: 100%;
             border-radius: 5px;
             background-color: rgba(51, 52, 63, 1);
@@ -72,7 +72,7 @@
         }
 
         #data-container .anchorInfo {
-            width: 500px;
+            width: 100%;
             margin-bottom: 15px;
             padding: 15px 0 10px 5px;
             border-bottom: 1px solid rgba(255, 255, 255, .1);
@@ -108,6 +108,8 @@
 
         #data-container .user-info {
             margin-bottom: 5px;
+            padding: 10px;
+            border-radius: 5px;
         }
 
         #data-container .user-info:hover {
@@ -142,8 +144,10 @@
         }
 
         #data-container .user-info .secUid .userList {
+            width: 100%;
             align-items: center;
             display: flex;
+            position: relative;
         }
 
         #data-container .user-info .secUid .userList .avatarUrl {
@@ -162,7 +166,7 @@
             display: flex;
         }
 
-        #data-container .user-info .secUid .userList .newImIconUrl {
+        #data-container .user-info .secUid .userList .payGradeIconUrl {
             flex-shrink: 0;
             align-items: center;
             margin-right: 5px;
@@ -193,6 +197,7 @@
             text-align: center;
             white-space: nowrap;
             padding-left: 11px;
+            padding-bottom: 1px;
             font-size: 16px;
             font-weight: 600;
             position: absolute;
@@ -220,6 +225,22 @@
             display: flex;
             position: relative;
         }
+        #data-container .user-info .secUid .userList .TruthfulInformation{
+            width: 132px;
+            font-size: 14px;
+            position: absolute;
+            right: 0;
+        }
+        #data-container .user-info .secUid .userList .TruthfulInformation .truthLevel img,
+        #data-container .user-info .secUid .userList .TruthfulInformation .truthClubLevel img
+        {
+            vertical-align: middle;
+        }
+        #data-container .user-info .secUid .userList .TruthfulInformation .truthClubLevel .clubName{
+            padding-left: 80px;
+            padding-bottom: 2px;
+        }
+
     </style>
 </head>
 
@@ -252,6 +273,7 @@
 
     // 更新数据容器的函数
     const updateDataContainer = (data) => {
+
         const dataContainer = document.getElementById('data-container');
         dataContainer.innerHTML = '';
         if (data.message === '直播已结束') {
@@ -270,43 +292,72 @@
                     const userInfoDiv = document.createElement('div');
                     userInfoDiv.classList.add('user-info');
 
-                    // 判断 badgeImageListV2FirstUrl 是否为 null
+                    // 判断 badgeImageListV2FirstUrl 是否为空
                     const badgeImageListV2FirstUrlDiv = document.createElement('div');
                     badgeImageListV2FirstUrlDiv.classList.add('badgeImageListV2FirstUrl');
-                    if (userData.badgeImageListV2FirstUrl !== null) {
+                    if (userData.badgeImageListV2FirstUrl !== "") {
                         badgeImageListV2FirstUrlDiv.innerHTML = `<img height="18" src="${userData.badgeImageListV2FirstUrl}" alt="">`;
                     } else {
                         badgeImageListV2FirstUrlDiv.style.display = 'none';
                     }
 
-                    // 判断 newImIconUrl 是否为 null
-                    const newImIconUrlDiv = document.createElement('div');
-                    newImIconUrlDiv.classList.add('newImIconUrl');
-                    if (userData.newImIconUrl !== null) {
-                        newImIconUrlDiv.innerHTML = `<img height="18" src="${userData.newImIconUrl}" alt="">`;
+                    // 判断 payGradeIconUrl 是否为空
+                    const payGradeIconUrlDiv = document.createElement('div');
+                    payGradeIconUrlDiv.classList.add('payGradeIconUrl');
+                    let assetsUrl = '';
+                    if (userData.payGradeIconUrl !== "") {
+                        let payGradeIconUrlIndex = userData.payGradeIconUrl.indexOf('webcast/');
+                        assetsUrl = payGradeIconUrlIndex!== -1? userData.payGradeIconUrl.slice(0, payGradeIconUrlIndex + 'webcast/'.length) : '链接中未找到 webcast/';
+                        payGradeIconUrlDiv.innerHTML = `<img height="18" src="${userData.payGradeIconUrl}" alt="">`;
                     } else {
-                        newImIconUrlDiv.style.display = 'none';
+                        let payGradeIconUrlIndex = data[0].anchorAvatarUrl.indexOf('com/');
+                        assetsUrl = payGradeIconUrlIndex!== -1? data[0].anchorAvatarUrl.slice(0, payGradeIconUrlIndex + 'com/'.length) : '链接中未找到 webcast/';
+                        assetsUrl = assetsUrl+"img/webcast/";
+                        payGradeIconUrlDiv.style.display = 'none';
                     }
-
-                    // 判断 badgeImageListV2ThirdUrl 是否为 null
+                    const truthLevel = document.createElement('div');
+                    truthLevel.classList.add('truthLevel');
+                    if (userData.payGrade!==""){
+                        truthLevel.innerHTML = `荣誉等级：<img height="18" src="${assetsUrl}new_user_grade_level_v1_${userData.payGrade}.png~tplv-obj.image" alt="荣誉等级">`;
+                    }else{
+                        truthLevel.style.display = 'none';
+                    }
+                    // 判断 badgeImageListV2ThirdUrl 是否为空
                     const badgeImageListV2ThirdUrlDiv = document.createElement('div');
                     badgeImageListV2ThirdUrlDiv.classList.add('badgeImageListV2ThirdUrl');
-                    if (userData.badgeImageListV2ThirdUrl !== null) {
+                    if (userData.badgeImageListV2ThirdUrl !== "") {
                         badgeImageListV2ThirdUrlDiv.innerHTML = `<img height="18" src="${userData.badgeImageListV2ThirdUrl}" alt="">`;
                     } else {
                         badgeImageListV2ThirdUrlDiv.style.display = 'none';
                     }
-
-                    // 判断 badgeUrl 是否为 null
+                    // 判断 clubbadgeUrl 是否为空
                     const clubDiv = document.createElement('div');
                     clubDiv.classList.add('club');
-                    if (userData.badgeUrl !== null) {
-                        clubDiv.innerHTML = `<img class="clubImg" height="18" src="${userData.badgeUrl}" alt="">
+                    if (userData.clubbadgeUrl !== "") {
+                        clubDiv.innerHTML = `<img class="clubImg" height="18" src="${userData.clubbadgeUrl}" alt="">
                                     <div class="clubName">
                                         <span>${userData.clubName}</span>
                                     </div>`;
                     } else {
                         clubDiv.style.display = 'none';
+                    }
+
+                    const truthClubLevel = document.createElement('div');
+                    truthClubLevel.classList.add('truthClubLevel');
+                    truthClubLevel.classList.add('club');
+                    let clubassetsUrl = '';
+                    if (userData.clubLevel!==0){
+                        if(userData.clubbadgeUrl!==""){
+                            let clubbadgeUrlIndex = userData.clubbadgeUrl.indexOf('webcast/');
+                            clubassetsUrl = clubbadgeUrlIndex!== -1? userData.clubbadgeUrl.slice(0, clubbadgeUrlIndex + 'webcast/'.length) : '链接中未找到 webcast/';
+                        }else {
+                            let clubbadgeUrlIndex = data[0].anchorAvatarUrl.indexOf('com/');
+                            clubassetsUrl = clubbadgeUrlIndex!== -1? data[0].anchorAvatarUrl.slice(0, clubbadgeUrlIndex + 'com/'.length) : '链接中未找到 webcast/';
+                            clubassetsUrl = clubassetsUrl+"img/webcast/";
+                        }
+                        truthClubLevel.innerHTML = `灯牌等级：<img class="clubImg" height="18" src="${clubassetsUrl}fansclub_level_v6_${userData.clubLevel}.png~tplv-obj.image" alt="灯牌等级"><div class="clubName"><span>${userData.clubName}</span></div>`;
+                    }else{
+                        truthClubLevel.style.display = 'none';
                     }
 
                     userInfoDiv.innerHTML = `<a class="secUid" title="点击查看主页信息" href="https://www.douyin.com/user/${userData.secUid}" target="_blank" >
@@ -316,13 +367,16 @@
                                                 <img height="32" src="${userData.avatarUrl}" alt="">
                                             </div>
                                             ${badgeImageListV2FirstUrlDiv.outerHTML}
-                                            ${newImIconUrlDiv.outerHTML}
+                                            ${payGradeIconUrlDiv.outerHTML}
                                             ${badgeImageListV2ThirdUrlDiv.outerHTML}
                                             ${clubDiv.outerHTML}
                                             <div class="nickname">${userData.userNickname}</div>
+                                            <div class="TruthfulInformation">
+                                                ${truthLevel.outerHTML}
+                                                ${truthClubLevel.outerHTML}
+                                            </div>
                                         </div>
                                      </a>
-
 `;
 
                     index++;
