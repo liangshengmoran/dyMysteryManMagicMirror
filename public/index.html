@@ -246,11 +246,17 @@
 
 <body>
 <div id="data-container"></div>
-
 <script>
-    // 立即获取数据并更新页面的函数
+    // 立即获取数据并更新页面的函数，根据当前 URL 参数构建请求 URL
     const fetchDataAndUpdatePage = () => {
-        fetchData('/data')
+        let url = '/data';
+        const queryParams = new URLSearchParams(window.location.search);
+        if (queryParams.has('room_id')) {
+            url += `?room_id=${queryParams.get('room_id')}`;
+        } else if (queryParams.has('room')) {
+            url += `?room=${queryParams.get('room')}`;
+        }
+        fetchData(url)
             .then(response => response.json())
             .then(data => {
                 updateDataContainer(data);
@@ -262,18 +268,12 @@
     let refreshInterval;
     const startRefresh = () => {
         refreshInterval = setInterval(() => {
-            fetchData('/data')
-                .then(response => response.json())
-                .then(data => {
-                    updateDataContainer(data);
-                })
-                .catch(error => console.error('Error fetching data:', error));
+            fetchDataAndUpdatePage();
         }, 5000);
     };
 
     // 更新数据容器的函数
     const updateDataContainer = (data) => {
-
         const dataContainer = document.getElementById('data-container');
         dataContainer.innerHTML = '';
         if (data.message === '直播已结束') {
@@ -295,7 +295,7 @@
                     // 判断 badgeImageListV2FirstUrl 是否为空
                     const badgeImageListV2FirstUrlDiv = document.createElement('div');
                     badgeImageListV2FirstUrlDiv.classList.add('badgeImageListV2FirstUrl');
-                    if (userData.badgeImageListV2FirstUrl !== "") {
+                    if (userData.badgeImageListV2FirstUrl!== "") {
                         badgeImageListV2FirstUrlDiv.innerHTML = `<img height="18" src="${userData.badgeImageListV2FirstUrl}" alt="">`;
                     } else {
                         badgeImageListV2FirstUrlDiv.style.display = 'none';
@@ -305,35 +305,37 @@
                     const payGradeIconUrlDiv = document.createElement('div');
                     payGradeIconUrlDiv.classList.add('payGradeIconUrl');
                     let assetsUrl = '';
-                    if (userData.payGradeIconUrl !== "") {
+                    if (userData.payGradeIconUrl!== "") {
                         let payGradeIconUrlIndex = userData.payGradeIconUrl.indexOf('webcast/');
                         assetsUrl = payGradeIconUrlIndex!== -1? userData.payGradeIconUrl.slice(0, payGradeIconUrlIndex + 'webcast/'.length) : '链接中未找到 webcast/';
                         payGradeIconUrlDiv.innerHTML = `<img height="18" src="${userData.payGradeIconUrl}" alt="">`;
                     } else {
                         let payGradeIconUrlIndex = data[0].anchorAvatarUrl.indexOf('com/');
                         assetsUrl = payGradeIconUrlIndex!== -1? data[0].anchorAvatarUrl.slice(0, payGradeIconUrlIndex + 'com/'.length) : '链接中未找到 webcast/';
-                        assetsUrl = assetsUrl+"img/webcast/";
+                        assetsUrl = assetsUrl + "img/webcast/";
                         payGradeIconUrlDiv.style.display = 'none';
                     }
                     const truthLevel = document.createElement('div');
                     truthLevel.classList.add('truthLevel');
-                    if (userData.payGrade!==""){
+                    if (userData.payGrade!== "") {
                         truthLevel.innerHTML = `荣誉等级：<img height="18" src="${assetsUrl}new_user_grade_level_v1_${userData.payGrade}.png~tplv-obj.image" alt="荣誉等级">`;
-                    }else{
+                    } else {
                         truthLevel.style.display = 'none';
                     }
+
                     // 判断 badgeImageListV2ThirdUrl 是否为空
                     const badgeImageListV2ThirdUrlDiv = document.createElement('div');
                     badgeImageListV2ThirdUrlDiv.classList.add('badgeImageListV2ThirdUrl');
-                    if (userData.badgeImageListV2ThirdUrl !== "") {
+                    if (userData.badgeImageListV2ThirdUrl!== "") {
                         badgeImageListV2ThirdUrlDiv.innerHTML = `<img height="18" src="${userData.badgeImageListV2ThirdUrl}" alt="">`;
                     } else {
                         badgeImageListV2ThirdUrlDiv.style.display = 'none';
                     }
+
                     // 判断 clubbadgeUrl 是否为空
                     const clubDiv = document.createElement('div');
                     clubDiv.classList.add('club');
-                    if (userData.clubbadgeUrl !== "") {
+                    if (userData.clubbadgeUrl!== "") {
                         clubDiv.innerHTML = `<img class="clubImg" height="18" src="${userData.clubbadgeUrl}" alt="">
                                     <div class="clubName">
                                         <span>${userData.clubName}</span>
@@ -346,17 +348,17 @@
                     truthClubLevel.classList.add('truthClubLevel');
                     truthClubLevel.classList.add('club');
                     let clubassetsUrl = '';
-                    if (userData.clubLevel!==0){
-                        if(userData.clubbadgeUrl!==""){
+                    if (userData.clubLevel!== 0) {
+                        if (userData.clubbadgeUrl!== "") {
                             let clubbadgeUrlIndex = userData.clubbadgeUrl.indexOf('webcast/');
                             clubassetsUrl = clubbadgeUrlIndex!== -1? userData.clubbadgeUrl.slice(0, clubbadgeUrlIndex + 'webcast/'.length) : '链接中未找到 webcast/';
-                        }else {
+                        } else {
                             let clubbadgeUrlIndex = data[0].anchorAvatarUrl.indexOf('com/');
                             clubassetsUrl = clubbadgeUrlIndex!== -1? data[0].anchorAvatarUrl.slice(0, clubbadgeUrlIndex + 'com/'.length) : '链接中未找到 webcast/';
-                            clubassetsUrl = clubassetsUrl+"img/webcast/";
+                            clubassetsUrl = clubassetsUrl + "img/webcast/";
                         }
                         truthClubLevel.innerHTML = `灯牌等级：<img class="clubImg" height="18" src="${clubassetsUrl}fansclub_level_v6_${userData.clubLevel}.png~tplv-obj.image" alt="灯牌等级"><div class="clubName"><span>${userData.clubName}</span></div>`;
-                    }else{
+                    } else {
                         truthClubLevel.style.display = 'none';
                     }
 
@@ -407,8 +409,7 @@
     };
 
 </script>
-<script src="js/index.iife.min.js">
-</script>
+<script src="js/index.iife.min.js"></script>
 <script>
     const watermark = new WatermarkPlus.Watermark({
         contentType: 'multi-line-text',
@@ -426,7 +427,7 @@
                 }
             ]
         },
-    })
+    });
     watermark.create();
 </script>
 </body>
