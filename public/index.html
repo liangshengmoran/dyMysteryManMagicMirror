@@ -68,25 +68,20 @@
             padding: 10px;
             font-weight: 800;
             font-size: 20px;
-
         }
 
-        #data-container .anchorInfo {
+
+        #data-container .anchorAvatar{
             width: 100%;
-            margin-bottom: 15px;
-            padding: 15px 0 10px 5px;
+            margin-right: 6px;
+            color: #fff;
+            font-size: 12px;
+            box-sizing: border-box;
+            display: flex;
+            padding: 10px 0 15px 10px;
             border-bottom: 1px solid rgba(255, 255, 255, .1);
-            position: sticky;
-            top: 0;
-            background-color: rgba(51, 52, 63);
-            z-index: 9999;
         }
-
-        #data-container .anchorInfo .anchorInfoList {
-            display: inline-block;
-        }
-
-        #data-container .anchorInfo .anchorInfoList .anchorInfoListContainer {
+        #data-container .anchorAvatar .anchorAvatarList{
             cursor: pointer;
             background: rgba(0, 0, 0, .2);
             border-radius: 33px;
@@ -94,15 +89,53 @@
             display: flex;
             padding: 2px 6px 2px 2px !important;
         }
-
-        #data-container .anchorInfo .anchorInfoList .anchorInfoListContainer img {
-            width: 32px;
-            height: 32px;
+        #data-container .anchorAvatar .anchorAvatarList .anchorAvatarListContent{
+            position: relative;
+            box-sizing: border-box;
+            margin-right: 8px;
+        }
+        #data-container .anchorAvatar .anchorAvatarList .anchorAvatarListContent .anchorAvatarUrl{
+            width: 32px !important;
+            height: 32px !important;
+            border-radius: 50%;
+            flex-grow: 0;
+            flex-shrink: 0;
+            display: block;
+            border: 1px solid rgba(255, 255, 255, 0) !important;
+            box-sizing: border-box;
+        }
+        #data-container .anchorAvatar .anchorAvatarList .anchorAvatarListContent .anchorAvatarUrl>img{
+            display: block;
+            width: 100%;
+            height: 100%;
             border-radius: 50%;
         }
-
-        #data-container .anchorInfo .anchorInfoList .anchorInfoListContainer span {
-            margin-left: 6px;
+        #data-container .anchorAvatar .anchorAvatarList .anchorAvatarListContent .anchorAvatarBorder{
+            width: calc(100% + 10px);
+            height: calc(100% + 10px);
+            background-repeat: no-repeat;
+            background-size: contain;
+            position: absolute;
+            top: 46%;
+            bottom: 0;
+            left: 50%;
+            right: 0;
+            transform: translate(-50%, -50%);
+        }
+        #data-container .anchorAvatar .anchorAvatarList .anchorAvatarNameList{
+            display: flex;
+            max-width: 100px;
+            min-width: 64px;
+            margin: 0 0 0 5px;
+        }
+        #data-container .anchorAvatar .anchorAvatarList .anchorAvatarNameList .anchorAvatarName{
+            position: relative;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-weight: 500;
+            line-height: 16px;
+            overflow: hidden;
+            color: #fff;
             font-size: 12px;
         }
 
@@ -154,31 +187,57 @@
             flex-shrink: 0;
             margin-left: 8px;
             margin-right: 8px;
+            display: flex;
             position: relative;
         }
+        #data-container .user-info .secUid .userList .avatarUrl .mysteryManAvatar{
+            margin-right: 10px;
+        }
+        #data-container .user-info .secUid .userList .avatarUrl .mysteryManAvatar .Avatarframe{
+            width: calc(100% + 5px);
+            height: calc(100% + 5px);
+            background-repeat: no-repeat;
+            background-size: contain;
+            position: absolute;
+            top: 43%;
+            bottom: 0;
+            left: 47%;
+            right: 0;
+            transform: translate(-50%, -50%);
+        }
 
-        #data-container .user-info .secUid .userList .avatarUrl img {
+        #data-container .user-info .secUid .userList .avatarUrl img,
+        #data-container .user-info .secUid .userList .avatarUrl .mysteryManAvatar img{
             border-radius: 50%;
         }
+        /*#data-container .user-info .secUid .userList .avatarUrl>img{*/
+        /*    margin-left: 10px;*/
+        /*}*/
 
-        #data-container .user-info .secUid .userList .badgeImageListV2FirstUrl {
-            margin-right: 5px;
+        /*#data-container .user-info .secUid .userList .badgeImageListV2FirstUrl {*/
+        /*    margin-right: 5px;*/
+        /*    display: flex;*/
+        /*}*/
+        #data-container .user-info .secUid .userList .userInfoList .presentUserInfoList{
             display: flex;
         }
-
-        #data-container .user-info .secUid .userList .payGradeIconUrl {
+        #data-container .user-info .secUid .userList .userInfoList .presentUserInfoList .mysteryManIconUrl,
+        #data-container .user-info .secUid .userList .userInfoList .presentUserInfoList .manageIconUrl,
+        #data-container .user-info .secUid .userList .userInfoList .presentUserInfoList .payGradeIconUrl,
+        #data-container .user-info .secUid .userList .userInfoList .presentUserInfoList .VIPicon {
             flex-shrink: 0;
             align-items: center;
             margin-right: 5px;
             display: flex;
         }
 
-        #data-container .user-info .secUid .userList .badgeImageListV2ThirdUrl {
-            margin-right: 5px;
-            display: flex;
-        }
 
-        #data-container .user-info .secUid .userList .club {
+        /*#data-container .user-info .secUid .userList .badgeImageListV2ThirdUrl {*/
+        /*    margin-right: 5px;*/
+        /*    display: flex;*/
+        /*}*/
+
+        #data-container .user-info .secUid .userList .userInfoList .presentUserInfoList .club{
             flex-shrink: 0;
             align-items: center;
             margin-right: 5px;
@@ -186,11 +245,11 @@
             position: relative;
         }
 
-        #data-container .user-info .secUid .userList .club .clubImg {
+        #data-container .user-info .secUid .userList .userInfoList .presentUserInfoList .club .clubImg {
             border-style: none;
         }
 
-        #data-container .user-info .secUid .userList .club .clubName {
+        #data-container .user-info .secUid .userList .userInfoList .presentUserInfoList .club .clubName {
             width: 100%;
             color: #fff;
             text-shadow: 0 1px 1px #ffa000;
@@ -203,7 +262,7 @@
             position: absolute;
         }
 
-        #data-container .user-info .secUid .userList .club .clubName span {
+        #data-container .user-info .secUid .userList .userInfoList .presentUserInfoList .club .clubName span {
             color: #fff;
             text-align: center;
             text-overflow: ellipsis;
@@ -215,7 +274,8 @@
             transform: scale(.5);
         }
 
-        #data-container .user-info .secUid .userList .nickname {
+        #data-container .user-info .secUid .userList .userInfoList .presentUserInfoList .nickname,
+        #data-container .user-info .secUid .userList .userInfoList .rawUserInfoList{
             text-overflow: ellipsis;
             white-space: nowrap;
             overflow: hidden;
@@ -224,6 +284,9 @@
             align-items: center;
             display: flex;
             position: relative;
+        }
+        #data-container .user-info .secUid .userList .userInfoList .rawUserInfoList span:nth-of-type(1){
+            margin-right: 10px;
         }
         #data-container .user-info .secUid .userList .TruthfulInformation{
             width: 132px;
@@ -236,9 +299,35 @@
         {
             vertical-align: middle;
         }
+        #data-container .user-info .secUid .userList .TruthfulInformation .club{
+            flex-shrink: 0;
+            align-items: center;
+            margin-right: 5px;
+            display: flex;
+            position: relative;
+        }
         #data-container .user-info .secUid .userList .TruthfulInformation .truthClubLevel .clubName{
-            padding-left: 80px;
+            width: 100%;
+            color: #fff;
+            text-shadow: 0 1px 1px #ffa000;
+            text-align: center;
+            white-space: nowrap;
+            padding-left: 75px;
             padding-bottom: 2px;
+            font-size: 16px;
+            font-weight: 600;
+            position: absolute;
+        }
+        #data-container .user-info .secUid .userList .TruthfulInformation .truthClubLevel .clubName span {
+            color: #fff;
+            text-align: center;
+            text-overflow: ellipsis;
+            flex-shrink: 0;
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 16px;
+            display: inline-block;
+            transform: scale(.5);
         }
 
     </style>
@@ -269,7 +358,7 @@
     const startRefresh = () => {
         refreshInterval = setInterval(() => {
             fetchDataAndUpdatePage();
-        }, 5000);
+        }, 500000);
     };
 
     // 更新数据容器的函数
@@ -283,8 +372,17 @@
         } else {
             // 创建 anchorNickname 的 div
             const anchorDiv = document.createElement('div');
-            anchorDiv.classList.add('anchorInfo');
-            anchorDiv.innerHTML = `<div class="anchorInfoList"><div class="anchorInfoListContainer"><img src="${data[0].anchorAvatarUrl}" alt="主播头像"><span>${data[0].anchorNickname}</span></div></div>`;
+            anchorDiv.classList.add('anchorAvatar');
+
+            const anchorAvatarList = document.createElement('div');
+            anchorAvatarList.classList.add('anchorAvatarList');
+            if(data[0].anchorAvatarBorder!==""){
+                anchorAvatarList.innerHTML = `<div class="anchorAvatarListContent"><span class="anchorAvatarUrl"><img src="${data[0].anchorAvatarUrl}" alt="主播头像"></span><div class="anchorAvatarBorder" style="background-image: url(${data[0].anchorAvatarBorder});"></div></div><div class="anchorAvatarNameList"><span class="anchorAvatarName">${data[0].anchorNickname}</span></div>`;
+            }else{
+                anchorAvatarList.innerHTML = `<div class="anchorAvatarListContent"><span class="anchorAvatarUrl"><img src="${data[0].anchorAvatarUrl}" alt="主播头像"></span></div><div class="anchorAvatarNameList"><span class="anchorAvatarName">${data[0].anchorNickname}</span></div>`;
+            }
+
+            anchorDiv.innerHTML = `${anchorAvatarList.outerHTML}`;
             dataContainer.appendChild(anchorDiv);
             let index = 1;
             data.forEach(item => {
@@ -292,13 +390,28 @@
                     const userInfoDiv = document.createElement('div');
                     userInfoDiv.classList.add('user-info');
 
-                    // 判断 badgeImageListV2FirstUrl 是否为空
-                    const badgeImageListV2FirstUrlDiv = document.createElement('div');
-                    badgeImageListV2FirstUrlDiv.classList.add('badgeImageListV2FirstUrl');
-                    if (userData.badgeImageListV2FirstUrl!== "") {
-                        badgeImageListV2FirstUrlDiv.innerHTML = `<img height="18" src="${userData.badgeImageListV2FirstUrl}" alt="">`;
-                    } else {
-                        badgeImageListV2FirstUrlDiv.style.display = 'none';
+                    const avatarUrl=document.createElement('div');
+                    avatarUrl.classList.add('avatarUrl');
+                    const mysteryManIconUrl=document.createElement('div');
+                    mysteryManIconUrl.classList.add('mysteryManIconUrl');
+                    const rawUserInfoList=document.createElement('div');
+                    rawUserInfoList.classList.add('rawUserInfoList');
+                    if(userData.mysteryMan===2){
+                        avatarUrl.innerHTML = `<div class="mysteryManAvatar"><img height="32" src="${userData.avatarUrl}" alt=""><div class="Avatarframe" style="background-image: url(${userData.Avatarframe})"></div></div><img height="32" src="${userData.mysteryManInfoAvatar}" alt="">`;
+                        mysteryManIconUrl.innerHTML=`<img height="18" src="${userData.mysteryManIconUrl}" alt="">`
+                        rawUserInfoList.innerHTML=`<span>昵称：${userData.mysteryManInfoNickname}</span><span>${userData.mysteryManInfoIp}</span>`
+                    }else {
+                        avatarUrl.innerHTML = `<img height="32" src="${userData.avatarUrl}" alt="">`;
+                        mysteryManIconUrl.style.display = 'none';
+                        rawUserInfoList.style.display = 'none';
+                    }
+
+                    const manageIconUrlDiv = document.createElement('div');
+                    manageIconUrlDiv.classList.add('manageIconUrl');
+                    if(userData.manageIconUrl!==""){
+                        manageIconUrlDiv.innerHTML = `<img height="18" src="${userData.manageIconUrl}" alt="">`;
+                    }else {
+                        manageIconUrlDiv.style.display = 'none';
                     }
 
                     // 判断 payGradeIconUrl 是否为空
@@ -315,22 +428,22 @@
                         assetsUrl = assetsUrl + "img/webcast/";
                         payGradeIconUrlDiv.style.display = 'none';
                     }
+                    const VIPiconDiv = document.createElement('div');
+                    VIPiconDiv.classList.add('VIPicon');
+                    if(userData.VIPico!==""){
+                        VIPiconDiv.innerHTML = `<img height="18" src="${userData.VIPico}" alt="">`;
+                    }else {
+                        VIPiconDiv.style.display = 'none';
+                    }
+
                     const truthLevel = document.createElement('div');
                     truthLevel.classList.add('truthLevel');
                     if (userData.payGrade!== "") {
-                        truthLevel.innerHTML = `荣誉等级：<img height="18" src="${assetsUrl}new_user_grade_level_v1_${userData.payGrade}.png~tplv-obj.image" alt="荣誉等级">`;
+                        truthLevel.innerHTML = `荣誉等级：<img height="17" src="${assetsUrl}new_user_grade_level_v1_${userData.payGrade}.png~tplv-obj.image" alt="荣誉等级">`;
                     } else {
                         truthLevel.style.display = 'none';
                     }
 
-                    // 判断 badgeImageListV2ThirdUrl 是否为空
-                    const badgeImageListV2ThirdUrlDiv = document.createElement('div');
-                    badgeImageListV2ThirdUrlDiv.classList.add('badgeImageListV2ThirdUrl');
-                    if (userData.badgeImageListV2ThirdUrl!== "") {
-                        badgeImageListV2ThirdUrlDiv.innerHTML = `<img height="18" src="${userData.badgeImageListV2ThirdUrl}" alt="">`;
-                    } else {
-                        badgeImageListV2ThirdUrlDiv.style.display = 'none';
-                    }
 
                     // 判断 clubbadgeUrl 是否为空
                     const clubDiv = document.createElement('div');
@@ -365,14 +478,18 @@
                     userInfoDiv.innerHTML = `<a class="secUid" title="点击查看主页信息" href="https://www.douyin.com/user/${userData.secUid}" target="_blank" >
                                         <div class="ordinal">${index}</div>
                                         <div class="userList">
-                                            <div class="avatarUrl">
-                                                <img height="32" src="${userData.avatarUrl}" alt="">
+                                            ${avatarUrl.outerHTML}
+                                            <div class="userInfoList">
+                                                ${rawUserInfoList.outerHTML}
+                                                <div class="presentUserInfoList">
+                                                    ${mysteryManIconUrl.outerHTML}
+                                                    ${manageIconUrlDiv.outerHTML}
+                                                    ${payGradeIconUrlDiv.outerHTML}
+                                                    ${VIPiconDiv.outerHTML}
+                                                    ${clubDiv.outerHTML}
+                                                    <div class="nickname">${userData.userNickname}</div>
+                                                </div>
                                             </div>
-                                            ${badgeImageListV2FirstUrlDiv.outerHTML}
-                                            ${payGradeIconUrlDiv.outerHTML}
-                                            ${badgeImageListV2ThirdUrlDiv.outerHTML}
-                                            ${clubDiv.outerHTML}
-                                            <div class="nickname">${userData.userNickname}</div>
                                             <div class="TruthfulInformation">
                                                 ${truthLevel.outerHTML}
                                                 ${truthClubLevel.outerHTML}
